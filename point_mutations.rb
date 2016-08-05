@@ -1,4 +1,3 @@
-require 'pry'
 class DNA
   attr_reader :strand
 
@@ -16,5 +15,4 @@ class DNA
 
     distance
   end
-
 end
