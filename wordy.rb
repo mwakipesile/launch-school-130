@@ -15,17 +15,9 @@ class WordProblem
 
     raise ArgumentError if numbers.size < 2 || operators.size < 1
 
-    accumulator = numbers.shift
-
-    loop do
-    	accumulator = accumulator.send(operators.shift, numbers.shift)
-    	break if numbers.empty?
-    end
-
-    accumulator
+    number = numbers.shift
+    numbers.inject(number) { |sum, num| sum.send(operators.shift, num) }
   end
-
-  private
 
   def translate_operators
     question.split.collect do |word|
