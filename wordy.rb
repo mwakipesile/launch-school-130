@@ -1,20 +1,26 @@
 class WordProblem
-  OPERATORS = {
+  OPERATOR_DICTIONARY = {
     'plus' => '+', 'minus' => '-', 'multiplied' => '*', 'divided' => '/'
   }.freeze
 
-  attr_reader :parts
+  attr_reader :question
 
   def initialize(question)
-    @parts = question.scan(/-?\d+|plus|minus|divided|multiplied/)
+    @question = question
   end
 
   def answer
-    num_operators = parts.select { |word| OPERATORS.key?(word) }.size
-    raise ArgumentError if num_operators < 1 || parts.size - num_operators < 1
+    numbers = question.scan(/-?\d+/).map(&:to_i)
+    operators = translate_operators
 
-    number = parts.shift.to_i
-    parts.each_slice(2)
-         .inject(number) { |sum, (word, n)| sum.send(OPERATORS[word], n.to_i) }
+    raise ArgumentError if numbers.size < 2 || operators.empty?
+
+    first_number = numbers.shift
+    numbers.inject(first_number) { |a, e| a.send(operators.shift, e) }
+  end
+
+  def translate_operators
+    question.split.select { |word| OPERATOR_DICTIONARY.key?(word) }
+            .map { |word| OPERATOR_DICTIONARY[word] }
   end
 end
