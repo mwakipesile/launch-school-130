@@ -2,20 +2,16 @@ class Anagram
   attr_reader :word
 
   def initialize(word)
-    @word = word
+    @word = word.downcase
   end
 
   def match(words_array)
-    words_array.select do |word|
-      anagram?(word)
-    end
+    words_array.select { |word| anagram?(word) }
   end
 
   def anagram?(str)
     str = str.downcase
-    match_word = word.downcase
-
-    return if str == match_word
-    str.split('').sort == match_word.split('').sort
+    return if str == word || str.size != word.size
+    str.chars.sort == word.chars.sort
   end
 end
