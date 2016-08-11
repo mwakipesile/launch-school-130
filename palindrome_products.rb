@@ -3,17 +3,17 @@ require_relative 'palindrome'
 
 class Palindromes
   attr_accessor :palindromes
-  attr_reader :limits
+  attr_reader :min_factor, :max_factor
 
-  def initialize(limits)
-    limits[:min_factor] ||= 1
-    @limits = limits
+  def initialize(min_factor: 1, max_factor: nil)
+    @min_factor = min_factor
+    @max_factor = max_factor
     @palindromes = []
   end
 
   def generate
     self.palindromes = palindrome_values.map do |value|
-                        Palindrome.new(value, limits)
+                        Palindrome.new(value, min_factor, max_factor)
                       end
   end
 
@@ -28,8 +28,7 @@ class Palindromes
   private
 
   def palindrome_values
-    [*limits[:min_factor]..limits[:max_factor]]
-    .repeated_combination(2).to_a.collect do |pair|
+    [*min_factor..max_factor].repeated_combination(2).to_a.collect do |pair|
   		 prod = pair.inject(:*)
   		 prod if palindrome?(prod)
   	end.compact.sort

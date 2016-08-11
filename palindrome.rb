@@ -1,18 +1,17 @@
-require 'pry'
-
 class Palindrome
-  attr_reader :value, :limits
+  attr_reader :value, :min_factor, :max_factor
 
-  def initialize(value, limits)
+  def initialize(value, min_factor, max_factor)
     @value = value
-    @limits = limits
+    @min_factor = min_factor
+    @max_factor = max_factor
   end
 
   def factors
-    lower_limit = (value.to_f / limits[:max_factor]).ceil
-    lower_limit = limits[:min_factor] if lower_limit < limits[:min_factor]
-    upper_limit = value / limits[:min_factor]
-    upper_limit = limits[:max_factor] if upper_limit > limits[:max_factor]
+    lower_limit = (value.to_f / max_factor).ceil
+    lower_limit = min_factor if lower_limit < min_factor
+    upper_limit = value / min_factor
+    upper_limit = max_factor if upper_limit > max_factor
     factors = []
 
     while upper_limit > lower_limit
