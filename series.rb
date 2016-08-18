@@ -10,7 +10,7 @@ class Series
     raise ArgumentError if size < length
 
     (0..(size - length)).each.with_object([]) do |i, a|
-      a << number_string.slice(i, length).split('').map(&:to_i)
+      a << number_string.slice(i, length).chars.map(&:to_i)
     end
   end
 end
