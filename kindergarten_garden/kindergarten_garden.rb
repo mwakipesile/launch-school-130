@@ -1,5 +1,3 @@
-require_relative 'plant'
-
 class Garden
   PLANTS = {clover: 'C', grass: 'G', radishes: 'R', violets: 'V' }.freeze
   CHILDS_COlUMNS_PER_ROW = 2
