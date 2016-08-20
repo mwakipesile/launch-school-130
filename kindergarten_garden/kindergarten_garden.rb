@@ -1,31 +1,30 @@
 require_relative 'plant'
-require_relative 'child'
 
 class Garden
-  include Plant
+  PLANTS = {clover: 'C', grass: 'G', radishes: 'R', violets: 'V' }.freeze
+  CHILDS_COlUMNS_PER_ROW = 2
 
-  attr_reader :plant_rows
+  attr_reader :plant_rows, :children
 
-  def initialize(plant_rows, children = nil)
-    @plant_rows = plant_rows
-    children ||= %w(
+  def initialize(plant_rows, children = %w(
       Alice Bob Charlie David Eve Fred Ginny
       Harriet Ileana Joseph Kincaid Larry
-    )
+    ))
 
-    children.map(&:downcase).each do |name|
-      define_singleton_method(name) do
-        instance_variable_set("@#{name}", Child.new(name, children))
-        childs_plants(instance_variable_get("@#{name}").position)
-      end
+    @plant_rows = plant_rows
+    @children = children.sort.map(&:downcase)
+    @children.each do |name|
+      define_singleton_method(name) { childs_plants(name) }
     end
   end
 
   private
 
-  def childs_plants(position)
+  def childs_plants(name)
+    position = children.index(name) * CHILDS_COlUMNS_PER_ROW
+
     childs_cups = plant_rows.each_line.inject('') do |cups, row|
-      cups << row.slice(position, Child::COlUMNS_PER_ROW)
+      cups << row.slice(position, CHILDS_COlUMNS_PER_ROW)
     end
 
     childs_cups.chars.map { |cup| PLANTS.key(cup) }
