@@ -9,13 +9,14 @@ class Garden
   def initialize(plant_rows, children = nil)
     @plant_rows = plant_rows
     children ||= %w(
-      Alice Bob Charlie David Eve Fred Ginny Harriet Ileana Joseph Kincaid Larry
+      Alice Bob Charlie David Eve Fred Ginny
+      Harriet Ileana Joseph Kincaid Larry
     )
 
-    children.each do |name|
-      self.class.send(:define_method, name.downcase) do
-        instance_variable_set("@#{name.downcase}", Child.new(name, children.sort))
-        childs_plants(instance_variable_get("@#{name.downcase}").position)
+    children.map(&:downcase).each do |name|
+      define_singleton_method(name) do
+        instance_variable_set("@#{name}", Child.new(name, children))
+        childs_plants(instance_variable_get("@#{name}").position)
       end
     end
   end

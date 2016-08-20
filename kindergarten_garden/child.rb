@@ -4,11 +4,11 @@ class Child
   attr_reader :name, :children
 
   def initialize(name, children)
-    @name = name
-    @children = children
+    @name = name.downcase
+    @children = children.sort.map(&:downcase)
   end
 
   def position
-    children.index(name.capitalize) * COlUMNS_PER_ROW
+    children.index(name) * COlUMNS_PER_ROW
   end
 end
