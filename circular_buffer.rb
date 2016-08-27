@@ -21,7 +21,7 @@ class CircularBuffer
 
   def write!(element)
     buffer << element unless element.nil?
-    buffer.shift(buffer.size - size)
+    buffer.shift(buffer.size - size) if buffer.size > size
   end
 
   def clear
