@@ -9,6 +9,7 @@ class Bst
 
   def insert(new_data)
     branch = new_data > data ? :right : :left
+
     if send(branch)
       send(branch).insert(new_data)
     else
