@@ -9,7 +9,11 @@ class Bst
 
   def insert(new_data)
     branch = new_data > data ? :right : :left
-    send(branch) ? send(branch).insert(new_data) : send("#{branch}=", self.class.new(new_data))
+    if send(branch)
+      send(branch).insert(new_data)
+    else
+      send("#{branch}=", self.class.new(new_data))
+    end
   end
 
   def each
