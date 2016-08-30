@@ -3,19 +3,15 @@ class School
   attr_accessor :students
 
   def initialize
-    @students = {
-      1 => [], 2 => [], 3 => [], 4 => [], 5 => [], 6 => [], 7 => [], 8 => []
-    }
+    @students = Hash.new { |roster, grade| roster[grade] = [] }
   end
 
   def to_h
-    (1..8).each.with_object({}) do |grade, school|
-      school[grade] = students[grade].sort unless students[grade].empty?
-    end
+    students.sort.to_h
   end
 
   def add(student, grade)
-    students[grade] << student
+    (students[grade] << student).sort!
   end
 
   def grade(number)
