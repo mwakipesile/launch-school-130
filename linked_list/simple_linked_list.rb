@@ -1,6 +1,6 @@
-require 'pry'
 require_relative 'element'
 
+# Singly linked list class
 class SimpleLinkedList
   attr_reader :list
 
@@ -38,7 +38,7 @@ class SimpleLinkedList
   end
 
   def to_a
-    list.map { |element| element.datum }.reverse
+    list.map(&:datum).reverse
   end
 
   def reverse

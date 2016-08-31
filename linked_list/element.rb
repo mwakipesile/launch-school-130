@@ -1,5 +1,4 @@
-require 'pry'
-
+# Collaborator class for simple linked list class
 class Element
   attr_reader :datum, :next
 
@@ -9,6 +8,6 @@ class Element
   end
 
   def tail?
-    self.next == nil
+    self.next.nil?
   end
 end
