@@ -1,25 +1,16 @@
+# Shine bright like a diamond!
 class Diamond
   def self.make_diamond(letter)
-    @letters = [*'A'..letter]
-    @half_row_size = @letters.size
-    @half_row = ' ' * @half_row_size
+    @column_mapped_letters = [*'A'..letter].reverse.concat([*'B'..letter])
+    @size = @column_mapped_letters.size
+    row_mapped_letters = [*'A'..letter].concat([*'A'...letter].reverse)
 
-    half_rows.concat(half_rows[0...-1].reverse).join("\n") << "\n"
+    row_mapped_letters.map { |char| row(char) }.join
   end
 
-  def self.half_rows
-    quadrant_rows.map do |row|
-    	row = (row.reverse << row).split('')
-    	row.delete_at(@half_row_size)
-    	row.join('')
-    end
-  end
-
-  def self.quadrant_rows
-    @letters.map.with_index do |letter, index|
-    	half_row = @half_row.dup
-    	half_row[index] = letter
-    	half_row
-    end
+  def self.row(letter)
+    @size.times.with_object('') do |idx, row|
+      row << (@column_mapped_letters[idx] == letter ? letter : ' ')
+    end << "\n"
   end
 end
